@@ -17,8 +17,8 @@ from datetime import date, datetime, time, timedelta
 from functools import wraps
 from typing import Any
 
-import config
-import gcal
+from . import config
+from . import gcal
 
 logger = logging.getLogger(__name__)
 

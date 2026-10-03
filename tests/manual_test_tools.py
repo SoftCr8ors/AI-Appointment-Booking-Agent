@@ -1,10 +1,15 @@
 """Manual test for Phase 2: run every tool against the real calendar (no LLM)."""
 import json
+import sys
 from datetime import timedelta
+from pathlib import Path
 
-import config
-import gcal
-import tools
+# Add parent directory to path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from backend import config
+from backend import gcal
+from backend import tools
 
 NAME = "Walid Khan"
 EMAIL = "walid.test@example.com"

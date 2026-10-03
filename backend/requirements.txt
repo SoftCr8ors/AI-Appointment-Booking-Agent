@@ -4,3 +4,8 @@ python-dotenv
 google-genai
 tzdata
 pytest
+langgraph>=1.0
+langchain-core>=1.0
+langchain-google-genai>=3.0
+langgraph-checkpoint-postgres
+psycopg[binary,pool]>=3.2
