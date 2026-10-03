@@ -365,3 +365,33 @@ def test_runaway_tool_loop_is_stopped(monkeypatch):
     )
     reply = agent.chat("s1", "hello", graph=agent.build_graph(InMemorySaver()))
     assert reply == agent.LOOP_REPLY
+
+
+# ==========================================================================
+# 6. A confirmation is valid only in the user's very next message
+# ==========================================================================
+def test_confirmation_expires_after_one_turn(book_calls):
+    _, pending, _ = agent._run_tool("book_appointment", BOOK, None, 1)
+    # user said "no" in turn 2 (no tool call), then asks again in turn 3
+    result, _, _ = agent._run_tool("book_appointment", BOOK, pending, 3)
+    assert book_calls[-1]["confirmed"] is False
+    assert result["error"] == "not_confirmed"
+
+
+def test_declined_cancel_cannot_be_reused_later(cancel_calls):
+    _, pending, _ = agent._run_tool("cancel_appointment", WHO, None, 1)
+    result, _, _ = agent._run_tool("cancel_appointment", WHO, pending, 3)
+    assert cancel_calls[-1]["confirmed"] is False
+    assert result["error"] == "not_confirmed"
+
+
+def test_declined_proposal_cannot_be_confirmed_later(monkeypatch):
+    flags, graph = install(
+        monkeypatch,
+        [book_call("c1"), AIMessage(content="Confirm?"), AIMessage(content="OK, dropped."),
+         book_call("c2"), AIMessage(content="Confirm again?")],
+    )
+    agent.chat("s1", "Book Monday 4pm", graph=graph)          # proposal (turn 1)
+    agent.chat("s1", "no", graph=graph)                       # declined (turn 2)
+    agent.chat("s1", "book Monday 4pm please", graph=graph)   # asked again (turn 3)
+    assert flags == [False, False]
