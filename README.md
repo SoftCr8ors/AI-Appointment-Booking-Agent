@@ -1,7 +1,7 @@
 # AI Appointment Booking Agent
 
 ## Project Overview
-This is an AI-powered appointment booking system that uses a conversational agent to help users book, reschedule, cancel, and view appointments. Built with LangGraph, Gemini AI, and integrated with Google Calendar, it provides a natural language interface for appointment management while enforcing business rules.
+This is an AI-powered appointment booking system that uses a conversational agent to help users book, reschedule, cancel, and view appointments. Built with LangGraph, Gemini AI, and integrated with Go[...]
 
 ## Technologies
 - Backend: Python, FastAPI
@@ -65,29 +65,29 @@ flowchart TB
 
     RULES ~~~ FLOW
 
-    style RULES fill:#E0F7FA,stroke:#00ACC1,stroke-width:2px
-    style FLOW fill:#FFF8DC,stroke:#FFA500,stroke-width:2px
+    style RULES fill:#E0F7FA,stroke:#00ACC1,stroke-width:2px,color:#000
+    style FLOW fill:#FFF8DC,stroke:#FFA500,stroke-width:2px,color:#000
 
-    style START fill:#90EE90,stroke:#333,stroke-width:3px
-    style LLM fill:#87CEEB,stroke:#333,stroke-width:3px
-    style TOOLS fill:#DDA0DD,stroke:#333,stroke-width:3px
-    style END fill:#FFB6C1,stroke:#333,stroke-width:3px
+    style START fill:#90EE90,stroke:#333,stroke-width:3px,color:#000
+    style LLM fill:#87CEEB,stroke:#333,stroke-width:3px,color:#000
+    style TOOLS fill:#DDA0DD,stroke:#333,stroke-width:3px,color:#000
+    style END fill:#FFB6C1,stroke:#333,stroke-width:3px,color:#000
 
-    style R1 fill:#FFF,stroke:#333,stroke-width:1px
-    style R2 fill:#FFF,stroke:#333,stroke-width:1px
-    style R3 fill:#FFF,stroke:#333,stroke-width:1px
-    style R4 fill:#FFF,stroke:#333,stroke-width:1px
-    style R5 fill:#FFF,stroke:#333,stroke-width:1px
-    style R6 fill:#FFF,stroke:#333,stroke-width:1px
+    style R1 fill:#FFF,stroke:#333,stroke-width:1px,color:#000
+    style R2 fill:#FFF,stroke:#333,stroke-width:1px,color:#000
+    style R3 fill:#FFF,stroke:#333,stroke-width:1px,color:#000
+    style R4 fill:#FFF,stroke:#333,stroke-width:1px,color:#000
+    style R5 fill:#FFF,stroke:#333,stroke-width:1px,color:#000
+    style R6 fill:#FFF,stroke:#333,stroke-width:1px,color:#000
 
-    style T1 fill:#F5DEB3,stroke:#333,stroke-width:1.5px
-    style T2 fill:#FFE4B5,stroke:#333,stroke-width:1.5px
-    style T3 fill:#F5DEB3,stroke:#333,stroke-width:1.5px
-    style T4 fill:#FFE4B5,stroke:#333,stroke-width:1.5px
-    style T5 fill:#FFE4B5,stroke:#333,stroke-width:1.5px
+    style T1 fill:#FFE4B5,stroke:#333,stroke-width:1.5px,color:#000
+    style T2 fill:#FFD700,stroke:#333,stroke-width:1.5px,color:#000
+    style T3 fill:#FFE4B5,stroke:#333,stroke-width:1.5px,color:#000
+    style T4 fill:#FFD700,stroke:#333,stroke-width:1.5px,color:#000
+    style T5 fill:#FFD700,stroke:#333,stroke-width:1.5px,color:#000
 ```
 
-The agent uses LangGraph to manage conversation state and tool calls. When a user message comes in, the LLM determines if tools are needed (checking availability, booking, etc.). After tool execution, it returns to the LLM to generate a response.
+The agent uses LangGraph to manage conversation state and tool calls. When a user message comes in, the LLM determines if tools are needed (checking availability, booking, etc.). After tool execut[...]
 
 ## Setup Instructions
 ### 1. Clone the Repository
