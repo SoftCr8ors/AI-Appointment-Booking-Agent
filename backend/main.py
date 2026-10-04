@@ -16,13 +16,14 @@ Features:
 """
 import logging
 import os
+import secrets
 import time
 import traceback
 from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import Any
 
-from fastapi import FastAPI, HTTPException, Request, status
+from fastapi import Depends, FastAPI, Header, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, field_validator
@@ -44,6 +45,22 @@ logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger("httpcore").setLevel(logging.WARNING)
 logging.getLogger("google").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
+
+
+# =============================================================================
+# API key protection (optional)
+# =============================================================================
+# If API_KEY is set in the environment, /chat requires it in the X-API-Key header.
+# If it is empty (local development), the endpoint stays open.
+API_KEY = os.getenv("API_KEY", "").strip()
+
+
+def require_api_key(x_api_key: str | None = Header(default=None)) -> None:
+    """Reject chat requests that do not carry the correct API key."""
+    if API_KEY and not secrets.compare_digest(
+        (x_api_key or "").encode(), API_KEY.encode()
+    ):
+        raise HTTPException(status_code=401, detail="Invalid or missing API key.")
 
 
 # =============================================================================
@@ -316,6 +333,7 @@ async def health_check():
     "/chat",
     response_model=ChatResponse,
     tags=["chat"],
+    dependencies=[Depends(require_api_key)],
     summary="Send a message to the AI assistant",
     description="Main conversation endpoint. Maintains conversation state using session_id.",
     responses={
@@ -334,7 +352,7 @@ async def health_check():
         },
     },
 )
-async def chat(request: ChatRequest):
+def chat(request: ChatRequest):
     """
     Process a user message and return the AI assistant's response.
 

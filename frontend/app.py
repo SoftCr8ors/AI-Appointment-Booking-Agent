@@ -34,6 +34,13 @@ try:
 except FileNotFoundError:
     BACKEND_URL = "http://localhost:8000"
 
+# Optional API key (must match API_KEY on the backend; leave unset for local use)
+try:
+    API_KEY = st.secrets.get("API_KEY", "")
+except FileNotFoundError:
+    API_KEY = ""
+HEADERS = {"X-API-Key": API_KEY} if API_KEY else {}
+
 # Timeout settings
 REQUEST_TIMEOUT = 30  # seconds
 WARMUP_TIMEOUT = 60   # seconds for cold starts
@@ -192,6 +199,7 @@ def send_message(message: str) -> str:
         response = requests.post(
             f"{BACKEND_URL}/chat",
             json={"session_id": st.session_state.session_id, "message": message},
+            headers=HEADERS,
             timeout=REQUEST_TIMEOUT
         )
         
