@@ -39,10 +39,10 @@ flowchart TB
         R1 ~~~ R2 ~~~ R3 ~~~ R4 ~~~ R5 ~~~ R6
     end
 
-    subgraph FLOW["🔄 LangGraph Flow"]
+    subgraph FLOW["🔄 LangGraph Flow (from agent.py build_graph)"]
         START(["__start__"])
-        LLM["llm node<br/>Calls Gemini AI"]
-        TOOLS["tools node<br/>Executes one of 5 tools below"]
+        LLM["llm node<br/>(llm_node function)<br/>Calls Gemini AI"]
+        TOOLS["tools node<br/>(tool_node function)<br/>Executes one of 5 tools below"]
         END(["end"])
 
         T1["1. check_availability<br/>Get free slots for a date"]
@@ -72,6 +72,19 @@ flowchart TB
     style LLM fill:#87CEEB,stroke:#333,stroke-width:3px
     style TOOLS fill:#DDA0DD,stroke:#333,stroke-width:3px
     style END fill:#FFB6C1,stroke:#333,stroke-width:3px
+
+    style R1 fill:#FFF,stroke:#333,stroke-width:1px
+    style R2 fill:#FFF,stroke:#333,stroke-width:1px
+    style R3 fill:#FFF,stroke:#333,stroke-width:1px
+    style R4 fill:#FFF,stroke:#333,stroke-width:1px
+    style R5 fill:#FFF,stroke:#333,stroke-width:1px
+    style R6 fill:#FFF,stroke:#333,stroke-width:1px
+
+    style T1 fill:#F5DEB3,stroke:#333,stroke-width:1.5px
+    style T2 fill:#FFE4B5,stroke:#333,stroke-width:1.5px
+    style T3 fill:#F5DEB3,stroke:#333,stroke-width:1.5px
+    style T4 fill:#FFE4B5,stroke:#333,stroke-width:1.5px
+    style T5 fill:#FFE4B5,stroke:#333,stroke-width:1.5px
 ```
 
 The agent uses LangGraph to manage conversation state and tool calls. When a user message comes in, the LLM determines if tools are needed (checking availability, booking, etc.). After tool execut[...]
