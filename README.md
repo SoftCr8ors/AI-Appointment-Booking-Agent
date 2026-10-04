@@ -39,10 +39,10 @@ flowchart TB
         R1 ~~~ R2 ~~~ R3 ~~~ R4 ~~~ R5 ~~~ R6
     end
 
-    subgraph FLOW["🔄 LangGraph Flow (from agent.py build_graph)"]
+    subgraph FLOW["🔄 LangGraph Flow"]
         START(["__start__"])
-        LLM["llm node<br/>(llm_node function)<br/>Calls Gemini AI"]
-        TOOLS["tools node<br/>(tool_node function)<br/>Executes one of 5 tools below"]
+        LLM["llm node<br/>Calls Gemini AI"]
+        TOOLS["tools node<br/>Executes one of 5 tools below"]
         END(["end"])
 
         T1["1. check_availability<br/>Get free slots for a date"]
@@ -65,26 +65,13 @@ flowchart TB
 
     RULES ~~~ FLOW
 
-    style RULES fill:#E0F7FA,stroke:#00ACC1,stroke-width:2px,color:#000
-    style FLOW fill:#FFF8DC,stroke:#FFA500,stroke-width:2px,color:#000
+    style RULES fill:#E0F7FA,stroke:#00ACC1,stroke-width:2px
+    style FLOW fill:#FFF8DC,stroke:#FFA500,stroke-width:2px
 
-    style START fill:#90EE90,stroke:#333,stroke-width:3px,color:#000
-    style LLM fill:#87CEEB,stroke:#333,stroke-width:3px,color:#000
-    style TOOLS fill:#DDA0DD,stroke:#333,stroke-width:3px,color:#000
-    style END fill:#FFB6C1,stroke:#333,stroke-width:3px,color:#000
-
-    style R1 fill:#FFF,stroke:#333,stroke-width:1px,color:#000
-    style R2 fill:#FFF,stroke:#333,stroke-width:1px,color:#000
-    style R3 fill:#FFF,stroke:#333,stroke-width:1px,color:#000
-    style R4 fill:#FFF,stroke:#333,stroke-width:1px,color:#000
-    style R5 fill:#FFF,stroke:#333,stroke-width:1px,color:#000
-    style R6 fill:#FFF,stroke:#333,stroke-width:1px,color:#000
-
-    style T1 fill:#FFE4B5,stroke:#333,stroke-width:1.5px,color:#000
-    style T2 fill:#FFD700,stroke:#333,stroke-width:1.5px,color:#000
-    style T3 fill:#FFE4B5,stroke:#333,stroke-width:1.5px,color:#000
-    style T4 fill:#FFD700,stroke:#333,stroke-width:1.5px,color:#000
-    style T5 fill:#FFD700,stroke:#333,stroke-width:1.5px,color:#000
+    style START fill:#90EE90,stroke:#333,stroke-width:3px
+    style LLM fill:#87CEEB,stroke:#333,stroke-width:3px
+    style TOOLS fill:#DDA0DD,stroke:#333,stroke-width:3px
+    style END fill:#FFB6C1,stroke:#333,stroke-width:3px
 ```
 
 The agent uses LangGraph to manage conversation state and tool calls. When a user message comes in, the LLM determines if tools are needed (checking availability, booking, etc.). After tool execut[...]
