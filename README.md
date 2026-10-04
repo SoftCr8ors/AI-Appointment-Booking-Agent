@@ -1,7 +1,7 @@
 # AI Appointment Booking Agent
 
 ## Project Overview
-This is an AI-powered appointment booking system that uses a conversational agent to help users book, reschedule, cancel, and view appointments. Built with LangGraph, Gemini AI, and integrated with Go[...]
+This is an AI-powered appointment booking system that uses a conversational agent to help users book, reschedule, cancel, and view appointments. Built with LangGraph, Gemini AI, and integrated with Google Calendar.
 
 ## Technologies
 - Backend: Python, FastAPI
@@ -35,27 +35,27 @@ flowchart TB
         R4["Working days:<br/>Mon-Fri"]
         R5["Hours: 10 AM - 6<br/>PM"]
         R6["Notice: 60<br/>minutes"]
-
+        
         R1 ~~~ R2 ~~~ R3 ~~~ R4 ~~~ R5 ~~~ R6
     end
 
-    subgraph FLOW["🔄 LangGraph Flow (from agent.py build_graph)"]
+    subgraph FLOW["🔄 LangGraph Flow"]
         START(["__start__"])
-        LLM["llm node<br/>(llm_node function)<br/>Calls Gemini AI"]
-        TOOLS["tools node<br/>(tool_node function)<br/>Executes one of 5 tools below"]
+        LLM["llm node<br/>Calls Gemini AI"]
+        TOOLS["tools node<br/>Executes one of 5 tools below"]
         END(["end"])
-
+        
         T1["1. check_availability<br/>Get free slots for a date"]
         T2["2. book_appointment<br/>Create booking<br/>(requires confirmation)"]
         T3["3. list_appointments<br/>Show user's bookings"]
         T4["4. cancel_appointment<br/>Remove booking<br/>(requires confirmation)"]
         T5["5. reschedule_appointment<br/>Move booking to new time<br/>(requires confirmation)"]
-
+        
         START --> LLM
         LLM -->|"has tool_calls?<br/>YES"| TOOLS
         LLM -.->|"no tool_calls?<br/>NO"| END
         TOOLS --> LLM
-
+        
         TOOLS -.-> T1
         TOOLS -.-> T2
         TOOLS -.-> T3
@@ -67,27 +67,14 @@ flowchart TB
 
     style RULES fill:#E0F7FA,stroke:#00ACC1,stroke-width:2px
     style FLOW fill:#FFF8DC,stroke:#FFA500,stroke-width:2px
-
+    
     style START fill:#90EE90,stroke:#333,stroke-width:3px
     style LLM fill:#87CEEB,stroke:#333,stroke-width:3px
     style TOOLS fill:#DDA0DD,stroke:#333,stroke-width:3px
     style END fill:#FFB6C1,stroke:#333,stroke-width:3px
-
-    style R1 fill:#FFF,stroke:#333,stroke-width:1px
-    style R2 fill:#FFF,stroke:#333,stroke-width:1px
-    style R3 fill:#FFF,stroke:#333,stroke-width:1px
-    style R4 fill:#FFF,stroke:#333,stroke-width:1px
-    style R5 fill:#FFF,stroke:#333,stroke-width:1px
-    style R6 fill:#FFF,stroke:#333,stroke-width:1px
-
-    style T1 fill:#F5DEB3,stroke:#333,stroke-width:1.5px
-    style T2 fill:#FFE4B5,stroke:#333,stroke-width:1.5px
-    style T3 fill:#F5DEB3,stroke:#333,stroke-width:1.5px
-    style T4 fill:#FFE4B5,stroke:#333,stroke-width:1.5px
-    style T5 fill:#FFE4B5,stroke:#333,stroke-width:1.5px
 ```
 
-The agent uses LangGraph to manage conversation state and tool calls. When a user message comes in, the LLM determines if tools are needed (checking availability, booking, etc.). After tool execut[...]
+The agent uses LangGraph to manage conversation state and tool calls. When a user message comes in, the LLM determines if tools are needed (checking availability, booking, etc.). After tool execution, the result loops back to the LLM for response generation.
 
 ## Setup Instructions
 ### 1. Clone the Repository
